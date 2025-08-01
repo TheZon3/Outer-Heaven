@@ -27,7 +27,7 @@ scene.add(torus);
 const pointLight = new THREE.PointLight(0xFFFFFF, 150);
 pointLight.position.set(5,5,5);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+const ambientLight = new THREE.AmbientLight(0xffffff, 2 );
 scene.add(ambientLight, pointLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight);
