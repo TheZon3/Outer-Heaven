@@ -16,6 +16,9 @@ camera.position.z = 30;
 
 renderer.render(scene, camera);
 
+const world = new THREE.Group();
+scene.add(world);
+
 const geometry = new THREE.BoxGeometry(10, 10, 10);
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe  : true});
 const cube = new THREE.Mesh(geometry, material);
@@ -30,31 +33,84 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 function addStar (){
   const geometry = new THREE.SphereGeometry(0.1, 25, 24,24);
-  const material = new THREE.MeshStandardMaterial( {color: 0xffffff}); 
+  const material = new THREE.MeshStandardMaterial( {color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 600.5} ); 
   const star = new THREE.Mesh(geometry, material);
   
-  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(500));
   star.position.set (x, y, z);
-  scene.add(star);
+  world.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+Array(1000).fill().forEach(addStar);
 
-function moveCamera() {
-  const t = document.body.getBoundingClientRect().top;
+// Define camera positions for each section
+const sectionPositions = {
+  section0: { x: 0, y: 0, z: 30 },
+  section1: { x: 0, y: 0, z: -30 },
+  section2: { x: 1, y: 1, z: -5 },
+  section3: { x: 2, y: 2, z: -100 }
+};
 
-  camera.position.z = t * -0.05 + 30;
-  camera.position.x = t * -0.003;
-  camera.position.y = t * -0.003;
+let currentSectionId = null;
+
+// Use IntersectionObserver to detect when a section enters the viewport
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const sectionId = entry.target.id;
+
+      if (sectionId !== currentSectionId) {
+        currentSectionId = sectionId;
+        moveCameraToSection(sectionId);
+      }
+    }
+  });
+}, {
+  root: null,
+  threshold: 0.5 // Trigger when 50% of section is visible
+});
+
+// Observe all sections
+document.querySelectorAll(".snap-section").forEach(section => {
+  observer.observe(section);
+});
+
+function moveCameraToSection(sectionId) {
+  const target = sectionPositions[sectionId];
+  if (!target) return;
+
+  const duration = 600;
+  const start = {
+    x: camera.position.x,
+    y: camera.position.y,
+    z: camera.position.z
+  };
+  const startTime = performance.now();
+
+  function animate(time) {
+    const elapsed = time - startTime;
+    const t = Math.min(elapsed / duration, 1);
+
+    // Ease-in-out interpolation
+    const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+    camera.position.x = start.x + (target.x - start.x) * ease;
+    camera.position.y = start.y + (target.y - start.y) * ease;
+    camera.position.z = start.z + (target.z - start.z) * ease;
+
+    if (t < 1) requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
 }
-
-window.addEventListener("scroll", moveCamera);
 
 
 function animate() {
   requestAnimationFrame(animate);
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  world.rotation.x += 0.0005;
+  world.rotation.y += 0.0005;
+
+
   controls.update();
   renderer.render(scene, camera);
 
