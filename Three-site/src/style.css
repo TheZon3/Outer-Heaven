@@ -91,9 +91,118 @@ html, body {
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-}
 
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
 .snap-section {
   height: 100vh;
   scroll-snap-align: center;
+}
+
+/* Responsive Navbar Styles */
+.navbar {
+  width: 100%;
+  background: var(--dark-bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  font-family: elevon, sans-serif;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 2rem;
+}
+
+.brand-title {
+  font-size: 2rem;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+.navbar-links ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+}
+
+.navbar-links li {
+  margin-left: 2rem;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #ffd700;
+}
+
+.toggle-button {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.toggle-button .bar {
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .navbar-container {
+    padding: 0.5rem 1rem;
+  }
+  .navbar-links ul {
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar-links {
+    display: none;
+    width: 100%;
+    background: var(--dark-bg);
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+  .navbar-links.active {
+    display: block;
+  }
+  .navbar-links li {
+    margin: 1rem 0;
+    text-align: center;
+  }
+  .toggle-button {
+    display: flex;
+  }
+}
+
+#section3 {
+  grid-column: 1 / -1; /* Span the full grid width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

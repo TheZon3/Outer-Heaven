@@ -1,4 +1,6 @@
 import './style.css'
+import './carousel.css'
+import './carousel.js'
 
 
 import * as THREE from 'three';
@@ -12,7 +14,7 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.z = 30;
+camera.position.z = 40;
 
 renderer.render(scene, camera);
 
@@ -23,6 +25,7 @@ const geometry = new THREE.BoxGeometry(10, 10, 10);
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe  : true});
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
+cube.position.x = -20;
 
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(5, 5, 5);
@@ -43,12 +46,14 @@ function addStar (){
 
 Array(1000).fill().forEach(addStar);
 
+// Section Animations---------------------------------------------------
+
 // Define camera positions for each section
 const sectionPositions = {
-  section0: { x: 0, y: 0, z: 30 },
-  section1: { x: 0, y: 0, z: -30 },
-  section2: { x: 1, y: 1, z: -5 },
-  section3: { x: 2, y: 2, z: -100 }
+  section0: { x: -10, y: 10, z: -30 },
+  section1: { x: -20, y: 2, z: -50 },
+  section2: { x: -30, y: 4, z: -50 },
+  section3: { x: -40, y: 8, z: -50 }
 };
 
 let currentSectionId = null;
@@ -117,3 +122,13 @@ function animate() {
 
 }
 animate();
+
+// Responsive Navbar Toggle
+const navbarToggle = document.getElementById('navbar-toggle');
+const navbarLinks = document.getElementById('navbar-links');
+if (navbarToggle && navbarLinks) {
+  navbarToggle.addEventListener('click', () => {
+    navbarLinks.classList.toggle('active');
+  });
+}
+

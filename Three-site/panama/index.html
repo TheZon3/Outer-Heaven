@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Event Countdown - August 12</title>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+	<style>
+		html, body {
+			scroll-behavior: smooth;
+			height: 100%;
+		}
+		body {
+			min-height: 100vh;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			padding: 0;
+			margin: 0;
+		}
+		   .snap-container {
+			   flex: 1 1 auto;
+			   min-height: 100vh;
+			   overflow-y: auto;
+			   display: flex;
+			   flex-direction: column;
+			   scroll-snap-type: y mandatory;
+			   scroll-padding-top: 0px;
+			   scroll-behavior: auto;
+			   scrollbar-width: none; /* Firefox */
+			   -ms-overflow-style: none; /* IE 10+ */
+		   }
+		   .snap-container::-webkit-scrollbar {
+			   display: none; /* Chrome, Safari, Opera */
+		   }
+		header {
+			scroll-snap-align: start;
+			min-height: 100vh;
+			height: 100vh;
+			position: relative;
+		}
+		#mission-section {
+			scroll-snap-align: start;
+		}
+		.no-snap {
+			scroll-snap-align: unset !important;
+		}
+		section {
+			scroll-snap-align: unset;
+			min-height: unset;
+			height: unset;
+		}
+		.scroll-down-indicator {
+			position: absolute;
+			left: 50%;
+			bottom: 2.5rem;
+			transform: translateX(-50%);
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			pointer-events: none;
+		}
+		.scroll-down-indicator span {
+			display: block;
+			width: 24px;
+			height: 24px;
+			border-bottom: 2.5px solid var(--spacex-gray);
+			border-right: 2.5px solid var(--spacex-gray);
+			transform: rotate(45deg);
+			margin-bottom: 4px;
+			animation: bounce 1.2s infinite;
+		}
+		@keyframes bounce {
+			0%, 100% { transform: translateY(0) rotate(45deg); }
+			50% { transform: translateY(10px) rotate(45deg); }
+		}
+		.scroll-down-indicator {
+			position: fixed;
+			left: 50%;
+			bottom: 2.5rem;
+			transform: translateX(-50%);
+			z-index: 1000;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			pointer-events: auto;
+			background: none !important;
+		}
+		.scroll-down-indicator span {
+			width: 24px;
+			height: 24px;
+			border-bottom: 2.5px solid var(--spacex-gray);
+			border-right: 2.5px solid var(--spacex-gray);
+			transform: rotate(45deg);
+			margin-bottom: 4px;
+		}
+		:root {
+			--spacex-black: #0a0c10;
+			--spacex-white: #fff;
+			--spacex-gray: #d0d6db;
+			--spacex-blue: #005288;
+			--spacex-red: #e03c31;
+			--spacex-divider: #22262c;
+		}
+		body {
+			margin: 0;
+			font-family: 'Montserrat', Arial, sans-serif;
+			background: var(--spacex-black);
+			color: var(--spacex-white);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			overflow-x: hidden;
+		}
+		#starfield {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			z-index: 0;
+			pointer-events: none;
+		}
+		header {
+			text-align: center;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 0 1rem;
+			z-index: 1;
+		}
+		h1 {
+			font-size: 3.2rem;
+			font-weight: 900;
+			margin-bottom: 0.5rem;
+			letter-spacing: 0.15em;
+			color: var(--spacex-white);
+			text-transform: uppercase;
+			line-height: 1.1;
+		}
+		.hero-divider {
+			width: 80px;
+			height: 3px;
+			background: var(--spacex-gray);
+			margin: 2rem auto 2.5rem auto;
+			border-radius: 2px;
+			opacity: 0.25;
+		}
+		.countdown {
+			display: flex;
+			justify-content: center;
+			gap: 2.5rem;
+			font-size: 2.2rem;
+			margin: 2rem 0 1rem 0;
+			z-index: 1;
+		}
+		.countdown div {
+			background: rgba(20, 22, 28, 0.92);
+			border-radius: 8px;
+			padding: 1.2rem 2.2rem;
+			box-shadow: 0 2px 12px 0 #0008;
+			text-align: center;
+			border: 1px solid var(--spacex-divider);
+			min-width: 80px;
+		}
+		.countdown span {
+			display: block;
+			font-size: 1.05rem;
+			font-weight: 500;
+			margin-top: 0.5rem;
+			color: var(--spacex-gray);
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+		}
+		section {
+			max-width: 800px;
+			width: calc(100% - 24px);
+			margin: 2.5rem auto 0 auto;
+			margin-bottom: 2.5rem;
+			background: rgba(20, 22, 28, 0.98);
+			border-radius: 10px;
+			padding: 2.5rem 2.2rem 2.2rem 2.2rem;
+			box-sizing: border-box;
+			box-shadow: 0 2px 24px #000a;
+			z-index: 1;
+			border: 1px solid var(--spacex-divider);
+		}
+		section h2 {
+			font-size: 1.3rem;
+			margin-bottom: 1.2rem;
+			color: var(--spacex-blue);
+			text-transform: uppercase;
+			letter-spacing: 0.12em;
+			font-weight: 700;
+		}
+		section p {
+			font-size: 1.13rem;
+			line-height: 1.7;
+			color: var(--spacex-gray);
+		}
+		footer {
+			margin-top: auto;
+			text-align: center;
+			padding: 2rem 1rem 1.2rem 1rem;
+			font-size: 1rem;
+			color: var(--spacex-gray);
+			background: rgba(20, 22, 28, 0.98);
+			border-top: 1px solid var(--spacex-divider);
+			z-index: 1;
+			letter-spacing: 0.08em;
+		}
+		@media (max-width: 900px) {
+			header {
+				min-height: 80vh;
+				padding: 0 0.5rem;
+			}
+			h1 {
+				font-size: 1.7rem;
+			}
+			.countdown {
+				gap: 0.7rem;
+				font-size: 1rem;
+			}
+			.countdown div {
+				padding: 0.6rem 0.7rem;
+				min-width: 44px;
+			}
+			section {
+				padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+			}
+		}
+		@media (max-width: 600px) {
+			header {
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				padding: 0 0.1rem;
+			}
+			h1 {
+				font-size: 1rem;
+				line-height: 1.1;
+				letter-spacing: 0.08em;
+			}
+			.hero-divider {
+				width: 28px;
+				height: 2px;
+				margin: 0.7rem auto 0.7rem auto;
+			}
+			.countdown {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 0.3rem 0.7rem;
+				font-size: 0.95rem;
+				justify-items: stretch;
+				align-items: stretch;
+				width: max-content;
+				max-width: 100%;
+				margin: 0 auto 0 auto;
+			}
+			.countdown div {
+				padding: 0.3rem 0.5rem;
+				min-width: 30px;
+			}
+			section {
+				width: calc(100% - 48px);
+				min-width: 0;
+				max-width: 600px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 2.5rem;
+				padding: 0.7rem 1rem 1.2rem 1rem;
+				font-size: 0.97rem;
+				box-sizing: border-box;
+			}
+			section h2 {
+				font-size: 0.95rem;
+				margin-bottom: 0.6rem;
+			}
+			section p {
+				font-size: 0.97rem;
+			}
+			.section-separator {
+				margin: 1.2rem 0 1.2rem 0;
+				border: none;
+				border-top: 1.5px solid var(--spacex-divider);
+				width: 100%;
+				opacity: 0.5;
+			}
+			footer {
+				padding: 1rem 0.2rem 0.7rem 0.2rem;
+				font-size: 0.85rem;
+			}
+		}
+		.section-separator {
+			margin: 1.7rem 0 1.7rem 0;
+			border: none;
+			border-top: 1.5px solid var(--spacex-divider);
+			width: 100%;
+			opacity: 0.5;
+		}
+		   .milestone-bar-container {
+			   width: 100%;
+			   max-width: 420px;
+			   margin: 2.2rem auto 0 auto;
+			   padding: 0 1rem;
+			   display: flex;
+			   flex-direction: column;
+			   align-items: stretch;
+			   gap: 0.3rem;
+		   }
+		   @media (max-width: 600px) {
+			   .milestone-bar-container {
+				   max-width: 90vw;
+				   margin-left: auto;
+				   margin-right: auto;
+				   padding: 0 0.2rem;
+			   }
+			   .milestone-bar-labels {
+				   font-size: 0.93rem;
+			   }
+			   .milestone-bar-bg {
+				   height: 22px;
+				   border-radius: 11px;
+			   }
+			   .milestone-bar-fill {
+				   border-radius: 11px 0 0 11px;
+				   font-size: 0.95rem;
+				   padding-right: 6px;
+			   }
+			   .milestone-bar-marker {
+				   width: 12px;
+				   height: 18px;
+				   border-radius: 5px;
+			   }
+			   .milestone-bar-marker::after {
+				   width: 5px;
+				   height: 5px;
+			   }
+			   .milestone-bar-percent {
+				   font-size: 0.93rem;
+			   }
+		   }
+		   .milestone-bar-labels {
+			   display: flex;
+			   justify-content: space-between;
+			   font-size: 1rem;
+			   color: var(--spacex-gray);
+			   margin-bottom: 0.2rem;
+			   font-family: inherit;
+		   }
+		   .milestone-amount {
+			   font-weight: 700;
+			   color: var(--spacex-white);
+			   letter-spacing: 0.02em;
+		   }
+		   .milestone-bar-bg {
+			   width: 100%;
+			   height: 32px;
+			   background: linear-gradient(90deg, #181b22 60%, #23242a 100%);
+			   border-radius: 16px;
+			   overflow: visible;
+			   border: 1.5px solid var(--spacex-divider);
+			   position: relative;
+			   box-shadow: 0 2px 12px 0 #00528844;
+		   }
+		   .milestone-bar-fill {
+			   height: 100%;
+			   background: linear-gradient(90deg, var(--spacex-blue) 0%, #1b8fff 100%);
+			   border-radius: 16px 0 0 16px;
+			   width: 0%;
+			   transition: width 1s cubic-bezier(.4,1.4,.6,1);
+			   position: absolute;
+			   left: 0;
+			   top: 0;
+			   z-index: 1;
+			   display: flex;
+			   align-items: center;
+			   justify-content: flex-end;
+			   font-weight: bold;
+			   color: var(--spacex-white);
+			   font-size: 1.1rem;
+			   padding-right: 12px;
+			   box-shadow: 0 0 8px 0 #1b8fff88;
+		   }
+		   .milestone-bar-percent {
+			   position: absolute;
+			   left: 50%;
+			   top: 50%;
+			   transform: translate(-50%, -50%);
+			   color: var(--spacex-blue);
+			   font-weight: 700;
+			   font-size: 1.1rem;
+			   z-index: 3;
+			   pointer-events: none;
+			   letter-spacing: 0.04em;
+		   }
+		   .milestone-bar-marker {
+			   position: absolute;
+			   top: 50%;
+			   transform: translateY(-50%);
+			   width: 18px;
+			   height: 32px;
+			   background: var(--spacex-white);
+			   border-radius: 8px;
+			   left: 0%;
+			   z-index: 2;
+			   box-shadow: 0 2px 8px #00528899;
+			   transition: left 1s cubic-bezier(.4,1.4,.6,1);
+			   display: flex;
+			   align-items: center;
+			   justify-content: center;
+			   border: 2.5px solid var(--spacex-blue);
+		   }
+		   .milestone-bar-marker::after {
+			   content: '';
+			   display: block;
+			   width: 8px;
+			   height: 8px;
+			   background: var(--spacex-blue);
+			   border-radius: 50%;
+			   margin: auto;
+			   box-shadow: 0 0 6px 2px #1b8fff88;
+		   }
+		   .milestone-bar-milestones {
+			   display: flex;
+			   justify-content: space-between;
+			   font-size: 0.85rem;
+			   color: var(--spacex-gray);
+			   margin-top: 0.1rem;
+			   font-family: inherit;
+		   }
+		   .carousel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2rem 0 1rem 0;
+    }
+    .carousel-track {
+      display: flex;
+      overflow: hidden;
+      width: 260px;
+      min-height: 120px;
+      position: relative;
+    }
+    .carousel-card {
+      flex: 0 0 100%;
+      background: rgba(20,22,28,0.98);
+      border: 1px solid var(--spacex-divider);
+      border-radius: 10px;
+      padding: 1.2rem 1rem;
+      box-sizing: border-box;
+      text-align: center;
+      color: var(--spacex-white);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.3s, transform 0.3s;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1;
+    }
+    .carousel-card.active {
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+      z-index: 2;
+    }
+    .carousel-nav {
+      background: var(--spacex-blue);
+      color: var(--spacex-white);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #00528844;
+      transition: background 0.2s;
+    }
+    .carousel-nav:active {
+      background: var(--spacex-red);
+    }
+    @media (max-width: 600px) {
+      .carousel-track {
+        width: 98vw;
+        min-height: 110px;
+      }
+      .carousel-card {
+        padding: 1rem 0.3rem;
+        font-size: 0.97rem;
+      }
+    }
+		</style>
+</head>
+<body>
+	<canvas id="starfield"></canvas>
+	<div class="snap-container">
+		<header>
+			<h1>Outer Heaven<br>Open Championship Countdown</h1>
+			<div class="hero-divider"></div>
+			<div class="countdown" id="countdown">
+				<div><span id="days">0</span><span>Days</span></div>
+				<div><span id="hours">0</span><span>Hours</span></div>
+				<div><span id="minutes">0</span><span>Minutes</span></div>
+				<div><span id="seconds">0</span><span>Seconds</span></div>
+			</div>
+			<div class="milestone-bar-container" role="region" aria-label="Funding Progress">
+				<div class="milestone-bar-labels">
+					<span id="milestone-current" class="milestone-amount">$0</span>
+					<span id="milestone-goal" class="milestone-amount">Goal: $4,000</span>
+				</div>
+				<div class="milestone-bar-bg" id="milestone-bar-bg">
+					<div class="milestone-bar-fill" id="milestone-bar-fill"></div>
+					<span class="milestone-bar-percent" id="milestone-bar-percent">0% funded</span>
+					<div class="milestone-bar-marker" id="milestone-bar-marker" aria-hidden="true"></div>
+				</div>
+				<div class="milestone-bar-milestones">
+					<span>0%</span>
+					<span>50%</span>
+					<span>100%</span>
+				</div>
+						</div>
+						<!-- CSS for milestone bar moved to <style> at the top of the file -->
+			<a href="#mission-section" class="scroll-down-indicator" aria-label="Scroll down">
+				<span></span>
+			</a>
+		</header>
+		<section id="mission-section">
+			<h2>Competition & Prizes</h2>
+			<p>
+				For just <strong style="color:var(--spacex-red);">$5</strong>, you can support our journey and enter to win amazing prizes! Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama. <br> Join us on <strong style="color:var(--spacex-red);">October 12, 2025</strong> for a special event where we’ll announce raffle winners and share highlights from our competition. Your support not only gives you a chance at great rewards—it helps inspire and empower Venezuelan youth in robotics.
+			</p>
+			<div class="carousel-container">
+				<button class="carousel-nav" id="carousel-prev" aria-label="Previous prize">&#8592;</button>
+				<div class="carousel-track">
+					<div class="carousel-card active">
+						<img src="Clock.png" alt="Cubit viva smart watch" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
+						<h3>1st Prize</h3>
+						<p>Cubit Viva Smart Watch </p>
+					</div>
+					<div class="carousel-card">
+						<img src="Earbuds.png" alt="Cubit Earbuds Gen2" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
+						<h3>2nd Prize</h3>
+						<p>Cubit Earbuds Gen2</p>
+					</div>
+				</div>
+				<button class="carousel-nav" id="carousel-next" aria-label="Next prize">&#8594;</button>
+			</div>
+  <style>
+    .carousel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2rem 0 1rem 0;
+    }
+    .carousel-track {
+      display: flex;
+      overflow: hidden;
+      width: 260px;
+      min-height: 120px;
+      position: relative;
+    }
+    .carousel-card {
+      flex: 0 0 100%;
+      background: rgba(20,22,28,0.98);
+      border: 1px solid var(--spacex-divider);
+      border-radius: 10px;
+      padding: 1.2rem 1rem;
+      box-sizing: border-box;
+      text-align: center;
+      color: var(--spacex-white);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.3s, transform 0.3s;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1;
+    }
+    .carousel-card.active {
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+      z-index: 2;
+    }
+    .carousel-nav {
+      background: var(--spacex-blue);
+      color: var(--spacex-white);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #00528844;
+      transition: background 0.2s;
+    }
+    .carousel-nav:active {
+      background: var(--spacex-red);
+    }
+    @media (max-width: 600px) {
+      .carousel-track {
+        width: 98vw;
+        min-height: 110px;
+      }
+      .carousel-card {
+        padding: 1rem 0.3rem;
+        font-size: 0.97rem;
+      }
+    }
+  </style>
+  <script>
+    const cards = document.querySelectorAll('.carousel-card');
+    let current = 0;
+    function showCard(idx) {
+      cards.forEach((card, i) => {
+        card.classList.toggle('active', i === idx);
+      });
+    }
+    document.getElementById('carousel-prev').onclick = function() {
+      current = (current === 0) ? cards.length - 1 : current - 1;
+      showCard(current);
+    };
+    document.getElementById('carousel-next').onclick = function() {
+      current = (current === cards.length - 1) ? 0 : current + 1;
+      showCard(current);
+    };
+    showCard(current);
+  </script>
+		</section>
+        
+	</div>
+	<section>
+		<h2>Our Mission</h2>
+		<p>
+			We are a passionate Venezuelan robotics team, national winners for the past two years, proudly representing our country in the World Robot Olympiad (WRO). Our mission is to inspire innovation, teamwork, and STEM excellence among youth, while breaking barriers to compete globally. This year, we aim to reach the WRO Open Championship in Panama, October 2025, and showcase the talent and resilience of Venezuelan students on the world stage.
+		</p>
+		<hr class="section-separator">
+	</section>
+	<section>
+		<h2>About the Competition</h2>
+		<p>
+			The WRO is a global robotics competition that brings together thousands of students from over 85 countries to solve real-world challenges using robotics and creative engineering. We compete in the RoboSports category, where teams design, build, and program robots to play dynamic sports games, testing both technical skill and strategic thinking. Our journey to Panama is not just about winning—it's about representing Venezuela, sharing our story, and connecting with the global robotics community.
+		</p>
+		<hr class="section-separator">
+	</section>
+	<section>
+		<h2>Global & National Impact</h2>
+		<p>
+			By participating in the WRO, we help put Venezuelan youth on the map, inspiring future generations to pursue science and technology. Our achievements have motivated local schools and communities, and we hope to continue making a positive impact both nationally and internationally. Supporting our team means investing in the future of STEM in Venezuela.
+		</p>
+		<hr class="section-separator">
+	</section>
+	
+	<section id="contact-section">
+		<h2>Contact Us</h2>
+		<p>
+			Have questions, want to support us, or just want to say hello? Reach out to our team using the form below or email us directly. We appreciate your interest and support!
+		</p>
+		<form style="display:flex;flex-direction:column;gap:1rem;max-width:420px;margin:0 auto;" action="https://formspree.io/f/xovlbkqg" method="POST">
+			<label for="name">Name</label>
+			<input type="text" id="name" name="name" required style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);">
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email" required style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);">
+			<label for="message">Message</label>
+			<textarea id="message" name="message" rows="5" required style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);"></textarea>
+			<button type="submit" style="background:var(--spacex-blue);color:var(--spacex-white);border:none;border-radius:6px;padding:0.9rem 1.2rem;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px #00528844;transition:background 0.2s;">Send Message</button>
+		</form>
+		<hr class="section-separator">
+		<p style="text-align:center;font-size:1rem;color:var(--spacex-gray);margin-top:1.2rem;">
+			Or email us at <a href="mailto:info@outerheaven.team" style="color:var(--spacex-blue);text-decoration:underline;">info@outerheaven.team</a>
+		</p>
+	</section>
+
+	<footer>
+		&copy; 2025 Outer Heaven | Reach for the stars
+		<br>
+	</footer>
+	<script>
+		// Set the date for the event (October 12, 2025)
+		const eventDate = new Date(2025, 9, 12, 0, 0, 0); // October is month 9 (0-indexed)
+		function updateCountdown() {
+			const now = new Date();
+			const diff = eventDate - now;
+			if (diff <= 0) {
+				document.getElementById('countdown').innerHTML = '<div style="font-size:1.5rem;">The event is live!</div>';
+				return;
+			}
+			const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+			const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+			const minutes = Math.floor((diff / (1000 * 60)) % 60);
+			const seconds = Math.floor((diff / 1000) % 60);
+			document.getElementById('days').textContent = days;
+			document.getElementById('hours').textContent = hours;
+			document.getElementById('minutes').textContent = minutes;
+			document.getElementById('seconds').textContent = seconds;
+		}
+		updateCountdown();
+		setInterval(updateCountdown, 1000);
+
+		// Space starfield animation (NASA/SpaceX palette)
+		const canvas = document.getElementById('starfield');
+		const ctx = canvas.getContext('2d');
+		let stars = [];
+		const STAR_COUNT = 180;
+		function resizeStarfield() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+		function createStars() {
+			stars = [];
+			for (let i = 0; i < STAR_COUNT; i++) {
+				// NASA/SpaceX: mostly white, some blue, a few red
+				let color, shadow;
+				const r = Math.random();
+				if (r < 0.82) {
+					color = '#fff';
+					shadow = '#f4f6fa';
+				} else if (r < 0.96) {
+					color = '#1b4fae';
+					shadow = '#0b1e3f';
+				} else {
+					color = '#e03c31';
+					shadow = '#e03c31';
+				}
+				stars.push({
+					x: Math.random() * canvas.width,
+					y: Math.random() * canvas.height,
+					radius: Math.random() * 1.2 + 0.3,
+					speed: Math.random() * 0.15 + 0.05,
+					alpha: Math.random() * 0.5 + 0.5,
+					color,
+					shadow
+				});
+			}
+		}
+		function drawStars() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			for (const star of stars) {
+				ctx.save();
+				ctx.globalAlpha = star.alpha;
+				ctx.beginPath();
+				ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+				ctx.fillStyle = star.color;
+				ctx.shadowColor = star.shadow;
+				ctx.shadowBlur = 8;
+				ctx.fill();
+				ctx.restore();
+				// Move star
+				star.y += star.speed;
+				if (star.y > canvas.height) {
+					star.y = 0;
+					star.x = Math.random() * canvas.width;
+				}
+			}
+		}
+		function animateStarfield() {
+			drawStars();
+			requestAnimationFrame(animateStarfield);
+		}
+		window.addEventListener('resize', () => {
+			resizeStarfield();
+			createStars();
+		});
+		resizeStarfield();
+		createStars();
+		animateStarfield();
+		// Funding milestone bar logic
+		// Example: current = 0, goal = 4000
+		const fundingCurrent = 0;
+		const fundingGoal = 4000;
+		const percent = Math.min(100, Math.round((fundingCurrent / fundingGoal) * 100));
+		document.getElementById('milestone-current').textContent = `$${fundingCurrent.toLocaleString()}`;
+		document.getElementById('milestone-goal').textContent = `Goal: $${fundingGoal.toLocaleString()}`;
+		document.getElementById('milestone-bar-fill').style.width = percent + '%';
+		// Move marker to current percent
+		const marker = document.getElementById('milestone-bar-marker');
+		marker.style.left = `calc(${percent}% - 9px)`; // Center marker
+		// Show percentage in the fill
+		document.getElementById('milestone-bar-percent').textContent = percent + '% funded';
+	</script>
+	<style>
+.outerheaven-frosted-btn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(30, 34, 44, 0.55);
+  box-shadow: 0 4px 24px #0006;
+  border-radius: 16px;
+  padding: 0.5rem 1.2rem 0.5rem 0.7rem;
+  backdrop-filter: blur(8px) saturate(1.2);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  border: 1.5px solid var(--spacex-divider);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--spacex-blue);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.outerheaven-frosted-btn:hover {
+  background: rgba(30, 34, 44, 0.85);
+  box-shadow: 0 6px 32px #00528888;
+}
+.outerheaven-logo {
+  height: 38px;
+  width: 38px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff2;
+  box-shadow: 0 2px 8px #00528844;
+}
+@media (max-width: 600px) {
+  .outerheaven-frosted-btn {
+    top: 10px;
+    left: 10px;
+    font-size: 1rem;
+    padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+    border-radius: 10px;
+  }
+  .outerheaven-logo {
+    height: 28px;
+    width: 28px;
+    border-radius: 6px;
+  }
+}
+</style>
+<button class="outerheaven-frosted-btn" onclick="window.location.href='/'" aria-label="Go to Outer Heaven homepage">
+  <img src="data outer heaven.png" alt="Outer Heaven Team Logo" class="outerheaven-logo">
+  OuterHeaven
+</button>
+</body>
+</html>
