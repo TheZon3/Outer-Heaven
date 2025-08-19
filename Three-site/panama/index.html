@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="icon" type="image/x-icon" href="logo.png">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Event Countdown - August 12</title>
+	<title>Outer Heaven team</title>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 	<style>
 		html, body {
@@ -535,7 +536,7 @@
 		<section id="mission-section">
 			<h2>Competition & Prizes</h2>
 			<p>
-				For just <strong style="color:var(--spacex-red);">$5</strong>, you can support our journey and enter to win amazing prizes! Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama. <br> Join us on <strong style="color:var(--spacex-red);">October 12, 2025</strong> for a special event where we’ll announce raffle winners and share highlights from our competition. Your support not only gives you a chance at great rewards—it helps inspire and empower Venezuelan youth in robotics.
+				For just <strong style="color:var(--spacex-red);">$5</strong>, you can support our journey and enter to win amazing prizes! Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama. <br> Join us on <strong style="color:var(--spacex-red);">October 20, 2025</strong> for a special event where we’ll announce raffle winners and share highlights from our competition. Your support not only gives you a chance at great rewards—it helps inspire and empower Venezuelan youth in robotics.
 			</p>
 			<div class="carousel-container">
 				<button class="carousel-nav" id="carousel-prev" aria-label="Previous prize">&#8592;</button>
@@ -687,7 +688,7 @@
 	</footer>
 	<script>
 		// Set the date for the event (October 12, 2025)
-		const eventDate = new Date(2025, 9, 12, 0, 0, 0); // October is month 9 (0-indexed)
+		const eventDate = new Date(2025, 9, 20, 0, 0, 0); // October is month 9 (0-indexed)
 		function updateCountdown() {
 			const now = new Date();
 			const diff = eventDate - now;
@@ -776,7 +777,7 @@
 		animateStarfield();
 		// Funding milestone bar logic
 		// Example: current = 0, goal = 4000
-		const fundingCurrent = 0;
+		const fundingCurrent = 60;
 		const fundingGoal = 4000;
 		const percent = Math.min(100, Math.round((fundingCurrent / fundingGoal) * 100));
 		document.getElementById('milestone-current').textContent = `$${fundingCurrent.toLocaleString()}`;
