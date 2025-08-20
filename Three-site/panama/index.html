@@ -544,12 +544,12 @@
 					<div class="carousel-card active">
 						<img src="Clock.png" alt="Cubit viva smart watch" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
 						<h3>1st Prize</h3>
-						<p>Cubit Viva Smart Watch </p>
+						<p>Cubitt Viva Smart Watch </p>
 					</div>
 					<div class="carousel-card">
 						<img src="Earbuds.png" alt="Cubit Earbuds Gen2" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
 						<h3>2nd Prize</h3>
-						<p>Cubit Earbuds Gen2</p>
+						<p>Cubitt Earbuds Gen2</p>
 					</div>
 				</div>
 				<button class="carousel-nav" id="carousel-next" aria-label="Next prize">&#8594;</button>
@@ -843,5 +843,32 @@
   <img src="data outer heaven.png" alt="Outer Heaven Team Logo" class="outerheaven-logo">
   OuterHeaven
 </button>
+<style>
+.section-animate {
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(.4,1.4,.6,1), transform 0.8s cubic-bezier(.4,1.4,.6,1);
+  will-change: opacity, transform;
+}
+.section-animate.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+</style>
+<!-- Add this before </body> -->
+<script>
+document.querySelectorAll('section').forEach(section => {
+  section.classList.add('section-animate');
+});
+const observer = new window.IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target); // Animate only once
+    }
+  });
+}, { threshold: 0.18 });
+document.querySelectorAll('section').forEach(section => observer.observe(section));
+</script>
 </body>
 </html>

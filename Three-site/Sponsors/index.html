@@ -195,6 +195,7 @@
 			text-transform: uppercase;
 			letter-spacing: 0.12em;
 			font-weight: 700;
+			z-index: 1000;
 		}
 		section p {
 			font-size: 1.13rem;
@@ -518,7 +519,7 @@
 		<section id="mission-section">
 			<h2>Sponsor opportunities</h2>
 			<p>
-				We are very proud to be able to represent not just Venezuela on the global stage but also those brands and organizations represent trully our values as venezuelans. We are looking forward to partnering with you to achieve our goals and aim higher day by day. Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama. <br> Join us on <strong style="color:var(--spacex-red);">October 20, 2025</strong> Where we will be competing to win on the global stage and inspire and empower Venezuelan youth in robotics.
+				We are very proud to be able to represent not just Venezuela on the global stage but also those brands and organizations represent trully our values as venezuelans. We are looking forward to partnering with you to achieve our goals and aim higher day by day. Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama.
 			</p>
 										<h2>Your brand can appear internationally:</h2>
 			<div class="carousel-container">
@@ -546,6 +547,8 @@
       justify-content: center;
       gap: 0.5rem;
       margin: 2rem 0 1rem 0;
+	  margin-top: -15px;
+
     }
     .carousel-track {
       display: flex;
@@ -824,6 +827,33 @@
   }
 }
 </style>
+<style>
+.section-animate {
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(.4,1.4,.6,1), transform 0.8s cubic-bezier(.4,1.4,.6,1);
+  will-change: opacity, transform;
+}
+.section-animate.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+</style>
+<!-- Add this before </body> -->
+<script>
+document.querySelectorAll('section').forEach(section => {
+  section.classList.add('section-animate');
+});
+const observer = new window.IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target); // Animate only once
+    }
+  });
+}, { threshold: 0.18 });
+document.querySelectorAll('section').forEach(section => observer.observe(section));
+</script>
 <button class="outerheaven-frosted-btn" onclick="window.location.href='/'" aria-label="Go to Outer Heaven homepage">
   <img src="data outer heaven.png" alt="Outer Heaven Team Logo" class="outerheaven-logo">
   OuterHeaven
