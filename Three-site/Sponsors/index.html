@@ -655,19 +655,52 @@
 		<p>
 			Have questions, want to support us, or want to set a meeting? Reach out to our team using the form below or email us directly. We appreciate your interest and support! 
 		</p>
-		<form style="display:flex;flex-direction:column;gap:1rem;max-width:420px;margin:0 auto;" action="https://formspree.io/f/xovlbkqg" method="POST">
+		<form style="display:flex;flex-direction:column;gap:1rem;max-width:420px;margin:0 auto;" action="https://formspree.io/f/xovlbkqg" method="POST" id="contact-form"></form>
 			<label for="name">Name</label>
 			<input type="text" id="name" name="name" required style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);">
 			<label for="email">Email</label>
 			<input type="email" id="email" name="email" required style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);">
 			<label for="message">Message</label>
 			<textarea id="message" name="message" rows="5" required style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);"></textarea>
+			<label for="meeting-date">Book a Meeting (optional)</label>
+			<input type="datetime-local" id="meeting-date" name="meeting-date" style="padding:0.7rem;border-radius:6px;border:1px solid var(--spacex-divider);background:rgba(20,22,28,0.98);color:var(--spacex-white);font-family:'Montserrat',Arial,sans-serif;" min="">
+			<span id="date-warning" style="color:var(--spacex-red);font-size:0.97rem;display:none;">Meetings must be booked at least 12 hours in advance.</span>
 			<button type="submit" style="background:var(--spacex-blue);color:var(--spacex-white);border:none;border-radius:6px;padding:0.9rem 1.2rem;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px #00528844;transition:background 0.2s;">Send Message</button>
 		</form>
 		<hr class="section-separator">
 		<p style="text-align:center;font-size:1rem;color:var(--spacex-gray);margin-top:1.2rem;">
 			Or email us at <a href="mailto:info@outerheaven.team" style="color:var(--spacex-blue);text-decoration:underline;">info@outerheaven.team</a>
 		</p>
+		<script>
+		// Set min for meeting-date input (12 hours from now)
+		const dateInput = document.getElementById('meeting-date');
+		function setMinDate() {
+			const now = new Date();
+			now.setHours(now.getHours() + 12);
+			const local = now.toISOString().slice(0,16);
+			dateInput.min = local;
+		}
+		setMinDate();
+
+		// Validate on submit
+		document.getElementById('contact-form').addEventListener('submit', function(e) {
+			const meetingVal = dateInput.value;
+			if (meetingVal) {
+				const selected = new Date(meetingVal);
+				const minDate = new Date(dateInput.min);
+				if (selected < minDate) {
+					document.getElementById('date-warning').style.display = 'block';
+					dateInput.focus();
+					e.preventDefault();
+				} else {
+					document.getElementById('date-warning').style.display = 'none';
+				}
+			}
+		});
+		dateInput.addEventListener('input', function() {
+			document.getElementById('date-warning').style.display = 'none';
+		});
+		</script>
 	</section>
 
 	<footer>

@@ -498,64 +498,8 @@
         font-size: 0.97rem;
       }
     }
-		</style>
-</head>
-<body>
-	<canvas id="starfield"></canvas>
-	<div class="snap-container">
-		<header>
-			<h1>Outer Heaven<br>Open Championship Countdown</h1>
-			<div class="hero-divider"></div>
-			<div class="countdown" id="countdown">
-				<div><span id="days">0</span><span>Days</span></div>
-				<div><span id="hours">0</span><span>Hours</span></div>
-				<div><span id="minutes">0</span><span>Minutes</span></div>
-				<div><span id="seconds">0</span><span>Seconds</span></div>
-			</div>
-			<div class="milestone-bar-container" role="region" aria-label="Funding Progress">
-				<div class="milestone-bar-labels">
-					<span id="milestone-current" class="milestone-amount">$0</span>
-					<span id="milestone-goal" class="milestone-amount">Goal: $4,000</span>
-				</div>
-				<div class="milestone-bar-bg" id="milestone-bar-bg">
-					<div class="milestone-bar-fill" id="milestone-bar-fill"></div>
-					<span class="milestone-bar-percent" id="milestone-bar-percent">0% funded</span>
-					<div class="milestone-bar-marker" id="milestone-bar-marker" aria-hidden="true"></div>
-				</div>
-				<div class="milestone-bar-milestones">
-					<span>0%</span>
-					<span>50%</span>
-					<span>100%</span>
-				</div>
-						</div>
-						<!-- CSS for milestone bar moved to <style> at the top of the file -->
-			<a href="#mission-section" class="scroll-down-indicator" aria-label="Scroll down">
-				<span></span>
-			</a>
-		</header>
-		<section id="mission-section">
-			<h2>Competition & Prizes</h2>
-			<p>
-				For just <strong style="color:var(--spacex-red);">$5</strong>, you can support our journey and enter to win amazing prizes! Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama. <br> Join us on <strong style="color:var(--spacex-red);">October 20, 2025</strong> for a special event where we’ll announce raffle winners and share highlights from our competition. Your support not only gives you a chance at great rewards—it helps inspire and empower Venezuelan youth in robotics.
-			</p>
-			<div class="carousel-container">
-				<button class="carousel-nav" id="carousel-prev" aria-label="Previous prize">&#8592;</button>
-				<div class="carousel-track">
-					<div class="carousel-card active">
-						<img src="Clock.png" alt="Cubit viva smart watch" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
-						<h3>1st Prize</h3>
-						<p>Cubitt Viva Smart Watch </p>
-					</div>
-					<div class="carousel-card">
-						<img src="Earbuds.png" alt="Cubit Earbuds Gen2" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
-						<h3>2nd Prize</h3>
-						<p>Cubitt Earbuds Gen2</p>
-					</div>
-				</div>
-				<button class="carousel-nav" id="carousel-next" aria-label="Next prize">&#8594;</button>
-			</div>
-  <style>
-    .carousel-container {
+
+	.carousel-container {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -618,28 +562,207 @@
         font-size: 0.97rem;
       }
     }
-  </style>
-  <script>
-    const cards = document.querySelectorAll('.carousel-card');
-    let current = 0;
-    function showCard(idx) {
-      cards.forEach((card, i) => {
-        card.classList.toggle('active', i === idx);
-      });
-    }
-    document.getElementById('carousel-prev').onclick = function() {
-      current = (current === 0) ? cards.length - 1 : current - 1;
-      showCard(current);
-    };
-    document.getElementById('carousel-next').onclick = function() {
-      current = (current === cards.length - 1) ? 0 : current + 1;
-      showCard(current);
-    };
-    showCard(current);
-  </script>
+
+	.donate-btns-container {
+		display: flex;
+		justify-content: center;
+		gap: 1.2rem;
+		margin: 2rem 0;
+		flex-wrap: wrap;
+	}
+	.donate-btn {
+		background: #0070ba;
+		color: #fff;
+		border: none;
+		border-radius: 8px;
+		padding: 1rem 2rem;
+		font-size: 1.2rem;
+		cursor: pointer;
+		box-shadow: 0 2px 8px #0070ba44;
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		transition: background 0.2s, box-shadow 0.2s;
+		font-family: 'Montserrat', Arial, sans-serif;
+		font-weight: 700;
+	}
+	.donate-btn:hover {
+		background: #005288;
+		box-shadow: 0 4px 16px #0070ba66;
+	}
+	.paypal-btn {
+		background: #0070ba;
+		box-shadow: 0 2px 8px #0070ba44;
+	}
+	.venmo-btn {
+		background: #3d95ce;
+		box-shadow: 0 2px 8px #3d95ce44;
+	}
+	.venmo-btn:hover {
+		background: #2574a9;
+	}
+	.zelle-btn {
+		background: #6f2da8;
+		box-shadow: 0 2px 8px #6f2da844;
+	}
+	.zelle-btn:hover {
+		background: #4b1c6b;
+	}
+	.cashapp-btn {
+		background: #00d632;
+		box-shadow: 0 2px 8px #00d63244;
+		color: #fff;
+	}
+	.cashapp-btn:hover {
+		background: #009e24;
+	}
+	.donate-btn-icon {
+		height: 28px;
+		width: 28px;
+		object-fit: contain;
+		border-radius: 6px;
+		background: #fff2;
+	}
+	@media (max-width: 600px) {
+		.donate-btns-container {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0.8rem;
+		}
+		.donate-btn {
+			width: 100%;
+			justify-content: center;
+			font-size: 1rem;
+			padding: 0.8rem 0.5rem;
+		}
+		.donate-btn-icon {
+			height: 22px;
+			width: 22px;
+		}
+	}
+		</style>
+</head>
+<body>
+	<canvas id="starfield"></canvas>
+	<div class="snap-container">
+		<header>
+			<h1>Outer Heaven<br>Open Championship Countdown</h1>
+			<div class="hero-divider"></div>
+			<div class="countdown" id="countdown">
+				<div><span id="days">0</span><span>Days</span></div>
+				<div><span id="hours">0</span><span>Hours</span></div>
+				<div><span id="minutes">0</span><span>Minutes</span></div>
+				<div><span id="seconds">0</span><span>Seconds</span></div>
+			</div>
+			<div class="milestone-bar-container" role="region" aria-label="Funding Progress">
+				<div class="milestone-bar-labels">
+					<span id="milestone-current" class="milestone-amount">$0</span>
+					<span id="milestone-goal" class="milestone-amount">Goal: $4,000</span>
+				</div>
+				<div class="milestone-bar-bg" id="milestone-bar-bg">
+					<div class="milestone-bar-fill" id="milestone-bar-fill"></div>
+					<div class="milestone-bar-marker" id="milestone-bar-marker" aria-hidden="true"></div>
+				</div>
+				<div class="milestone-bar-milestones">
+					<span>0%</span>
+					<span>25%</span>
+					<span>50%</span>
+					<span>75%</span>
+					<span>100%</span>
+				</div>
+						</div>
+						<!-- CSS for milestone bar moved to <style> at the top of the file -->
+			<a href="#mission-section" class="scroll-down-indicator" aria-label="Scroll down">
+				<span></span>
+			</a>
+		</header>
+		<section id="mission-section">
+			<h2>Competition & Prizes</h2>
+			<p>
+				For just <strong style="color:var(--spacex-red);">$5</strong>, you can support our journey and enter to win amazing prizes! Your contribution helps cover travel, registration, and equipment costs so we can compete in Panama. <br> Join us on <strong style="color:var(--spacex-red);">October 20, 2025</strong> for a special event where we’ll announce raffle winners and share highlights from our competition. Your support not only gives you a chance at great rewards—it helps inspire and empower Venezuelan youth in robotics.
+			</p>
+			<div class="carousel-container">
+				<button class="carousel-nav" id="carousel-prev" aria-label="Previous prize">&#8592;</button>
+				<div class="carousel-track">
+					<div class="carousel-card active">
+						<img src="Clock.png" alt="Cubit viva smart watch" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
+						<h3>1st Prize</h3>
+						<p>Cubitt Viva Smart Watch </p>
+					</div>
+					<div class="carousel-card">
+						<img src="Earbuds.png" alt="Cubit Earbuds Gen2" style="max-width:100%;height:120px;object-fit:contain;border-radius:8px;margin-bottom:0.7rem;">
+						<h3>2nd Prize</h3>
+						<p>Cubitt Earbuds Gen2</p>
+					</div>
+				</div>
+				<button class="carousel-nav" id="carousel-next" aria-label="Next prize">&#8594;</button>
+			</div>
+
 		</section>
+
         
-	</div>
+	</div>		
+	<section>
+		<h2>Sponsors</h2>
+		<p>
+			The organizations that are building the future and thinking big with us.
+		</p>
+		<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3.5rem; margin: 3rem 0;">
+			<div style="display: flex; flex-direction: column; align-items: center; max-width: 240px;">
+				<div class="sponsor-glass-bg">
+					<img src="JQ.png" alt="Copa Airlines Logo" style="max-width:180px; max-height:120px; object-fit:contain; border-radius:12px; background:none; box-shadow:none; margin-bottom:0;">
+				</div>
+				<span style="color:whitesmoke; font-weight:500; font-size:1.22rem; text-align:center; margin-top:1rem;">JQ Foundation</span>
+			</div>
+						<div style="display: flex; flex-direction: column; align-items: center; max-width: 240px;">
+				<div class="sponsor-glass-bg">
+					<img src="COPA.png" alt="Copa Airlines Logo" style="max-width:180px; max-height:120px; object-fit:contain; border-radius:12px; background:none; box-shadow:none; margin-bottom:0;">
+				</div>
+				<span style="color:whitesmoke; font-weight:500; font-size:1.22rem; text-align:center; margin-top:1rem;">Copa Airlines</span>
+			</div>
+			<!-- Add more sponsors here as needed -->
+		</div>
+		<style>
+		.sponsor-glass-bg {
+			background: linear-gradient(135deg, rgba(255,255,255,0.32) 0%, rgba(180,220,255,0.18) 60%, rgba(255,255,255,0.10) 100%);
+			box-shadow: 0 8px 32px 0 rgba(30,60,120,0.18), 0 1.5px 8px 0 #00528833;
+			border-radius: 18px;
+			padding: 1.1rem 1.2rem;
+			backdrop-filter: blur(18px) saturate(1.4);
+			-webkit-backdrop-filter: blur(18px) saturate(1.4);
+			border: 1.5px solid rgba(255,255,255,0.22);
+			transition: box-shadow 0.25s, background 0.25s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 180px;
+			min-height: 120px;
+			position: relative;
+			overflow: hidden;
+		}
+		.sponsor-glass-bg::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at 60% 30%, rgba(180,220,255,0.22) 0%, rgba(255,255,255,0.10) 80%);
+			opacity: 0.7;
+			pointer-events: none;
+			border-radius: inherit;
+		}
+		.sponsor-glass-bg:hover {
+			box-shadow: 0 12px 40px 0 rgba(30,60,120,0.28), 0 2px 12px 0 #00528855;
+			background: linear-gradient(135deg, rgba(255,255,255,0.44) 0%, rgba(180,220,255,0.24) 60%, rgba(255,255,255,0.16) 100%);
+		}
+		@media (max-width: 600px) {
+			.sponsor-glass-bg {
+				padding: 0.6rem 0.5rem;
+				min-width: 110px;
+				min-height: 70px;
+				border-radius: 10px;
+			}
+		}
+		</style>
+	</section>
 	<section>
 		<h2>Our Mission</h2>
 		<p>
@@ -677,6 +800,90 @@
 			<button type="submit" style="background:var(--spacex-blue);color:var(--spacex-white);border:none;border-radius:6px;padding:0.9rem 1.2rem;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px #00528844;transition:background 0.2s;">Send Message</button>
 		</form>
 		<hr class="section-separator">
+		<p style="text-align:center;font-size:1rem;color:var(--spacex-gray);margin-top:1.2rem;">
+			Or email us at <a href="mailto:info@outerheaven.team" style="color:var(--spacex-blue);text-decoration:underline;">info@outerheaven.team</a>
+		</p>
+	</section>
+
+	<section>
+		<h2>Invest In Us, Invest in the future!</h2>
+		<p>
+			We are a passionate Venezuelan robotics team, national winners for the past two years, proudly representing our country in the World Robot Olympiad (WRO). Our mission is to inspire innovation, teamwork, and STEM excellence among youth, while breaking barriers to compete globally. This year, we aim to reach the WRO Open Championship in Panama, October 2025, and showcase the talent and resilience of Venezuelan students on the world stage.
+		</p>
+		<div class="donate-btns-container">
+			<form action="https://www.paypal.com/" method="post" target="_blank" style="margin:0;">
+				<input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+				<button type="submit" class="donate-btn paypal-btn">
+					<img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" class="donate-btn-icon">
+					Pay with PayPal
+				</button>
+				
+			</form>
+			<form action="https://venmo.com/u/jqfoundationorg" method="get" target="_blank" style="margin:0;">
+				<button type="submit" class="donate-btn venmo-btn">
+					<img src="venmo.png" alt="Venmo" class="donate-btn-icon">
+					Pay with Venmo
+				</button>
+			</form>
+			<button type="button" class="donate-btn zelle-btn" id="mobile-payments-btn">
+				<img src="bdv.png" alt="Mobile mobile-payments-btn" class="donate-btn-icon">
+				Mobile Payments
+			</button>
+			<div id="mobile-payments-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:3000;background:rgba(10,12,16,0.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+				<div style="background:rgba(20,22,28,0.98);border-radius:12px;max-width:380px;width:90vw;padding:2rem 1.2rem;box-shadow:0 4px 32px #00528888;border:1.5px solid var(--spacex-divider);display:flex;flex-direction:column;gap:1.1rem;position:relative;align-items:center;">
+					<h2 style="color:var(--spacex-blue);margin-bottom:0.7rem;font-size:1.2rem;text-align:center;">Mobile Payments Info</h2>
+					<div style="display:flex;flex-direction:column;gap:0.7rem;width:100%;"></div>
+						<div style="display:flex;justify-content:space-between;align-items:center;">
+							<span style="color:var(--spacex-gray);font-weight:500;">Bank:&nbsp;&nbsp;&nbsp;</span>
+							<span id="copy-bank" style="color:var(--spacex-white);font-weight:700;cursor:pointer;">Bancamiga (0172)&nbsp;&nbsp;</span>
+							<button type="button" onclick="copyRow('copy-bank')" style="background:var(--spacex-blue);color:#fff;border:none;border-radius:6px;padding:0.2rem 0.7rem;cursor:pointer;font-size:0.95rem;">Copy</button>
+						</div>
+						<div style="display:flex;justify-content:space-between;align-items:center;">
+							<span style="color:var(--spacex-gray);font-weight:500;">Phone:&nbsp;&nbsp;&nbsp;</span>
+							<span id="copy-phone" style="color:var(--spacex-white);font-weight:700;cursor:pointer;">+58 414-3270492&nbsp;&nbsp;</span>
+							<button type="button" onclick="copyRow('copy-phone')" style="background:var(--spacex-blue);color:#fff;border:none;border-radius:6px;padding:0.2rem 0.7rem;cursor:pointer;font-size:0.95rem;">Copy</button>
+						</div>
+						<div style="display:flex;justify-content:space-between;align-items:center;">
+							<span style="color:var(--spacex-gray);font-weight:500;">ID:&nbsp;&nbsp;&nbsp;</span>
+							<span id="copy-id" style="color:var(--spacex-white);font-weight:700;cursor:pointer;">V-10866153&nbsp;&nbsp;</span>
+							<button type="button" onclick="copyRow('copy-id')" style="background:var(--spacex-blue);color:#fff;border:none;border-radius:6px;padding:0.2rem 0.7rem;cursor:pointer;font-size:0.95rem;">Copy</button>
+						</div>
+					<button type="button" onclick="document.getElementById('mobile-payments-modal').style.display='none'" style="background:var(--spacex-red);color:#fff;border:none;border-radius:8px;padding:0.7rem 1.2rem;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px #e03c3144;align-self:center;margin-top:1rem;">Close</button>
+					</div>
+					<div id="copy-feedback" style="display:none;margin-top:0.5rem;background:var(--spacex-blue);color:#fff;padding:0.5rem 1rem;border-radius:6px;font-size:1rem;text-align:center;box-shadow:0 2px 8px #00528844;"></div>
+				</div>
+			</div>
+			<script>
+			document.getElementById('mobile-payments-btn').onclick = function() {
+				const modal = document.getElementById('mobile-payments-modal');
+				modal.style.display = 'flex';
+				modal.style.alignItems = 'center';
+				modal.style.justifyContent = 'center';
+			};
+			function copyRow(id) {
+				const text = document.getElementById(id).textContent;
+				navigator.clipboard.writeText(text).then(() => {
+					const el = document.getElementById(id);
+					const oldBg = el.style.background;
+					const oldColor = el.style.color;
+					el.style.background = 'var(--spacex-blue)';
+					el.style.color = '#fff';
+					const feedback = document.getElementById('copy-feedback');
+					feedback.textContent = 'Copied!';
+					feedback.style.display = 'block';
+					setTimeout(() => {
+						el.style.background = oldBg;
+						el.style.color = oldColor;
+						feedback.style.display = 'none';
+					}, 1200);
+				});
+			}
+			</script>
+		</div>
+		<hr class="section-separator">
+		<p>
+			Make sure to send us a message after donating so we can include you in our community / raffle draw!
+		</p>
 		<p style="text-align:center;font-size:1rem;color:var(--spacex-gray);margin-top:1.2rem;">
 			Or email us at <a href="mailto:info@outerheaven.team" style="color:var(--spacex-blue);text-decoration:underline;">info@outerheaven.team</a>
 		</p>
@@ -777,7 +984,7 @@
 		animateStarfield();
 		// Funding milestone bar logic
 		// Example: current = 0, goal = 4000
-		const fundingCurrent = 970;
+		const fundingCurrent = 2215;
 		const fundingGoal = 4000;
 		const percent = Math.min(100, Math.round((fundingCurrent / fundingGoal) * 100));
 		document.getElementById('milestone-current').textContent = `$${fundingCurrent.toLocaleString()}`;
@@ -791,6 +998,7 @@
 	</script>
 	<style>
 .outerheaven-frosted-btn {
+	text-decoration: none;
   position: fixed;
   top: 24px;
   left: 24px;
@@ -839,7 +1047,7 @@
   }
 }
 </style>
-<button class="outerheaven-frosted-btn" onclick="window.location.href='/'" aria-label="Go to Outer Heaven homepage">
+<a class="outerheaven-frosted-btn" href="https://www.instagram.com/outerheaven_team/" aria-label="Go to Outer Heaven homepage">
   <img src="data outer heaven.png" alt="Outer Heaven Team Logo" class="outerheaven-logo">
   OuterHeaven
 </button>
@@ -869,6 +1077,23 @@ const observer = new window.IntersectionObserver((entries) => {
   });
 }, { threshold: 0.18 });
 document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+    const cards = document.querySelectorAll('.carousel-card');
+    let current = 0;
+    function showCard(idx) {
+      cards.forEach((card, i) => {
+        card.classList.toggle('active', i === idx);
+      });
+    }
+    document.getElementById('carousel-prev').onclick = function() {
+      current = (current === 0) ? cards.length - 1 : current - 1;
+      showCard(current);
+    };
+    document.getElementById('carousel-next').onclick = function() {
+      current = (current === cards.length - 1) ? 0 : current + 1;
+      showCard(current);
+    };
+    showCard(current);
 </script>
 </body>
 </html>
