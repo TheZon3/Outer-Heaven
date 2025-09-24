@@ -710,13 +710,17 @@
 		<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3.5rem; margin: 3rem 0;">
 			<div style="display: flex; flex-direction: column; align-items: center; max-width: 240px;">
 				<div class="sponsor-glass-bg">
-					<img src="JQ.png" alt="Copa Airlines Logo" style="max-width:180px; max-height:120px; object-fit:contain; border-radius:12px; background:none; box-shadow:none; margin-bottom:0;">
+					<a href="https://www.jqfoundation.org/">
+						<img src="JQ.png" alt="Copa Airlines Logo" style="max-width:180px; max-height:120px; object-fit:contain; border-radius:12px; background:none; box-shadow:none; margin-bottom:0;">
+					</a>
 				</div>
 				<span style="color:whitesmoke; font-weight:500; font-size:1.22rem; text-align:center; margin-top:1rem;">JQ Foundation</span>
 			</div>
 						<div style="display: flex; flex-direction: column; align-items: center; max-width: 240px;">
 				<div class="sponsor-glass-bg">
-					<img src="COPA.png" alt="Copa Airlines Logo" style="max-width:180px; max-height:120px; object-fit:contain; border-radius:12px; background:none; box-shadow:none; margin-bottom:0;">
+					<a href="https://www.copaair.com/">
+						<img src="COPA.png" alt="Copa Airlines Logo" style="max-width:180px; max-height:120px; object-fit:contain; border-radius:12px; background:none; box-shadow:none; margin-bottom:0;">
+					</a>
 				</div>
 				<span style="color:whitesmoke; font-weight:500; font-size:1.22rem; text-align:center; margin-top:1rem;">Copa Airlines</span>
 			</div>
@@ -984,7 +988,7 @@
 		animateStarfield();
 		// Funding milestone bar logic
 		// Example: current = 0, goal = 4000
-		const fundingCurrent = 2215;
+		const fundingCurrent = 2300;
 		const fundingGoal = 4000;
 		const percent = Math.min(100, Math.round((fundingCurrent / fundingGoal) * 100));
 		document.getElementById('milestone-current').textContent = `$${fundingCurrent.toLocaleString()}`;
